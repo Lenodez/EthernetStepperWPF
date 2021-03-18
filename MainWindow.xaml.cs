@@ -17,8 +17,9 @@ namespace EthernetStepperWPF
         private static IPAddress remoteIPAddress;
         private static int remotePort;
         private static int localPort;
+        private static int sendPort;
         public bool isalive = false;
-        Task tReceive = null;
+        Thread tReceive = null;
         UdpClient receivingUdpClient = null;
         public MainWindow()
         {
@@ -33,6 +34,7 @@ namespace EthernetStepperWPF
         {
             localPort = Int16.Parse(localportTextBox.Text);
             remotePort = Int16.Parse(remoteportTextBox.Text);
+            sendPort = Int16.Parse(sendportbox.Text);
             remoteIPAddress = IPAddress.Parse(remoteadressTextBox.Text);
             localportTextBox.IsReadOnly = true;
             remoteportTextBox.IsReadOnly = true;
@@ -40,8 +42,8 @@ namespace EthernetStepperWPF
             isalive = true;
 
             try
-            {                
-                tReceive = new Task(Receiver);
+            {
+                tReceive = new Thread(new ThreadStart(Receiver));
                 tReceive.Start();
                 loginButton.IsEnabled = false;
                 logoutButton.IsEnabled = true;
@@ -66,7 +68,7 @@ namespace EthernetStepperWPF
             {
 
 
-                while (true)
+                while (isalive)
                 {
                     // Ожидание дейтаграммы
                     byte[] receiveBytes = receivingUdpClient.Receive(
@@ -91,7 +93,7 @@ namespace EthernetStepperWPF
         public static void Send(string datagram)
         {
             // Создаем UdpClient
-            UdpClient sender = new UdpClient();
+            UdpClient sender = new UdpClient(sendPort);
 
             // Создаем endPoint по информации об удаленном хосте
             IPEndPoint endPoint = new IPEndPoint(remoteIPAddress, remotePort);
@@ -103,7 +105,7 @@ namespace EthernetStepperWPF
 
                 // Отправляем данные
                 sender.Send(bytes, bytes.Length, endPoint);
-                sender.Close();
+                
             }
             catch (Exception ex)
             {
@@ -120,7 +122,7 @@ namespace EthernetStepperWPF
         {
             EndSocket();
             isalive = false;
-            
+            tReceive.Abort();
             receivingUdpClient.Close();
         }
         private void EndSocket()
