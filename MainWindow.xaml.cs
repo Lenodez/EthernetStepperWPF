@@ -1,11 +1,9 @@
-﻿using System.Windows;
-using System;
+﻿using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using NuGet.Protocol.Plugins;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace EthernetStepperWPF
 {
@@ -55,9 +53,9 @@ namespace EthernetStepperWPF
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
-        private void Receiver()
+        public async void Receiver()
         {
             // Создаем UdpClient для чтения входящих данных
             receivingUdpClient = new UdpClient(localPort);
@@ -76,18 +74,25 @@ namespace EthernetStepperWPF
 
                     // Преобразуем и отображаем данные
                     string returnData = Encoding.UTF8.GetString(receiveBytes);
-                    receivedMessageTextBox.Text = returnData.ToString();
+                    string dataget = returnData.ToString();
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        receivedMessageTextBox.Text = dataget;
+                    });
+
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Возникло исключение: " + ex.ToString() + "\n  " + ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 
-        private void sendButton_Click(object sender, RoutedEventArgs e)
+        private async void sendButton_Click(object sender, RoutedEventArgs e)
         {
+
             Send(commandTextBox.Text);
+
         }
 
         public static void Send(string datagram)
@@ -105,7 +110,7 @@ namespace EthernetStepperWPF
 
                 // Отправляем данные
                 sender.Send(bytes, bytes.Length, endPoint);
-                
+
             }
             catch (Exception ex)
             {
@@ -122,7 +127,7 @@ namespace EthernetStepperWPF
         {
             EndSocket();
             isalive = false;
-            tReceive.Abort();
+            
             receivingUdpClient.Close();
         }
         private void EndSocket()
