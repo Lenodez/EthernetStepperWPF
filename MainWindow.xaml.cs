@@ -55,7 +55,7 @@ namespace EthernetStepperWPF
             }
 
         }
-        public async void Receiver()
+        public void Receiver()
         {
             // Создаем UdpClient для чтения входящих данных
             receivingUdpClient = new UdpClient(localPort);
@@ -88,7 +88,7 @@ namespace EthernetStepperWPF
             }
         }
 
-        private async void sendButton_Click(object sender, RoutedEventArgs e)
+        private void sendButton_Click(object sender, RoutedEventArgs e)
         {
 
             Send(commandTextBox.Text);
