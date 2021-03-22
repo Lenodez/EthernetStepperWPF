@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Windows;
+using System.Threading.Tasks;
 
 namespace EthernetStepperWPF
 {
@@ -55,38 +56,8 @@ namespace EthernetStepperWPF
             }
 
         }
-        public void Receiver()
-        {
-            // Создаем UdpClient для чтения входящих данных
-            receivingUdpClient = new UdpClient(localPort);
-
-            IPEndPoint RemoteIpEndPoint = null;
-
-            try
-            {
-
-
-                while (isalive)
-                {
-                    // Ожидание дейтаграммы
-                    byte[] receiveBytes = receivingUdpClient.Receive(
-                       ref RemoteIpEndPoint);
-
-                    // Преобразуем и отображаем данные
-                    string returnData = Encoding.UTF8.GetString(receiveBytes);
-                    string dataget = returnData.ToString();
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        receivedMessageTextBox.Text = dataget;
-                    });
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+        
+            
 
         private void sendButton_Click(object sender, RoutedEventArgs e)
         {
@@ -140,4 +111,53 @@ namespace EthernetStepperWPF
             commandTextBox.IsReadOnly = true;
         }
     }
+
+    public class ReceiverUDP
+    {
+        private UdpClient receivingUdpClient;
+        public int localport;
+        int message;
+
+        public int Localport
+        {
+            get { return localport; }
+            set { localport = value; }
+        }
+        public 
+
+        void StartReceive()
+        {
+            
+            // Создаем UdpClient для чтения входящих данных
+            receivingUdpClient = new UdpClient(localport);
+
+            IPEndPoint RemoteIpEndPoint = null;
+
+            try
+            {
+
+
+                while (true)
+                {
+                    // Ожидание дейтаграммы
+                    byte[] receiveBytes = receivingUdpClient.Receive(
+                       ref RemoteIpEndPoint);
+
+                    // Преобразуем и отображаем данные
+                    string returnData = Encoding.UTF8.GetString(receiveBytes);
+                    string dataget = returnData.ToString();                 
+                    
+                    receivedMessageTextBox.Text = dataget;
+                    
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+    }
+
 }
