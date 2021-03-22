@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Threading.Tasks;
 
@@ -13,32 +12,30 @@ namespace EthernetStepperWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static IPAddress remoteIPAddress;
-        private static int remotePort;
-        private static int localPort;
-        private static int sendPort;
-        public bool isalive = false;        
-        UdpClient receivingUdpClient = null;
+        ReceiverUDP receiverUDP = new ReceiverUDP();
+        Sender senderUDP = new Sender();        
+
         public MainWindow()
         {
             InitializeComponent();
             loginButton.IsEnabled = true;
             logoutButton.IsEnabled = false;
             sendButton.IsEnabled = false;
-            commandTextBox.IsReadOnly = true;
+            commandTextBox.IsReadOnly = true;          
             
         }
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
-            localPort = Int16.Parse(localportTextBox.Text);
-            remotePort = Int16.Parse(remoteportTextBox.Text);
-            sendPort = Int16.Parse(sendportbox.Text);
-            remoteIPAddress = IPAddress.Parse(remoteadressTextBox.Text);
+            receiverUDP.Localport = Int16.Parse(localportTextBox.Text);
+            senderUDP.Remoteport = Int16.Parse(remoteportTextBox.Text);
+            senderUDP.Sendport = Int16.Parse(sendportbox.Text);
+            senderUDP.IP = IPAddress.Parse(remoteadressTextBox.Text);
             localportTextBox.IsReadOnly = true;
             remoteportTextBox.IsReadOnly = true;
             remoteadressTextBox.IsReadOnly = true;
-            isalive = true;
+            
+            
 
             try
             {                
@@ -59,55 +56,16 @@ namespace EthernetStepperWPF
 
         private void sendButton_Click(object sender, RoutedEventArgs e)
         {
-
-            Send(commandTextBox.Text);
-
-        }
-
-        public static void Send(string datagram)
-        {
-            // Создаем UdpClient
-            UdpClient sender = new UdpClient(sendPort);
-
-            // Создаем endPoint по информации об удаленном хосте
-            IPEndPoint endPoint = new IPEndPoint(remoteIPAddress, remotePort);
-
-            try
-            {
-                // Преобразуем данные в массив байтов
-                byte[] bytes = Encoding.UTF8.GetBytes(datagram);
-
-                // Отправляем данные
-                sender.Send(bytes, bytes.Length, endPoint);
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Возникло исключение: " + ex.ToString() + "\n  " + ex.Message);
-            }
-            finally
-            {
-                // Закрыть соединение
-                sender.Close();
-            }
-        }
+            Task Sending = Task.Run(() =>
+            senderUDP.Send(commandTextBox.Text));            
+        }        
 
         private void logoutButton_Click(object sender, RoutedEventArgs e)
         {
-            EndSocket();
-            isalive = false;
+            receiverUDP.Stopreceive();                    
             
-            receivingUdpClient.Close();
         }
-        private void EndSocket()
-        {
-            localportTextBox.IsReadOnly = false;
-            remoteportTextBox.IsReadOnly = false;
-            remoteadressTextBox.IsReadOnly = false;
-            loginButton.IsEnabled = true;
-            logoutButton.IsEnabled = false;
-            commandTextBox.IsReadOnly = true;
-        }
+        
     }
 
     public class ReceiverUDP
@@ -128,7 +86,7 @@ namespace EthernetStepperWPF
 
         }
 
-        void StartReceive()
+        public void StartReceive()
         {
             
             // Создаем UdpClient для чтения входящих данных
@@ -161,11 +119,58 @@ namespace EthernetStepperWPF
             }
 
         }
+
+        public void Stopreceive()
+        {
+            receivingUdpClient.Close();
+        }
     }
 
     public class Sender
     {
+        int sendport;
+        int remoteport;
+        IPAddress remoteIPAddress;
+        private UdpClient sender;
+        public int Sendport
+        {
+            set { sendport = value; }
+        }
+        public int Remoteport
+        {
+            set { remoteport = value; }
+        }
 
+        public IPAddress IP
+        {
+            set { remoteIPAddress = value; }
+        }
+
+
+        public void Send(string datagram)
+        {
+            sender = new UdpClient(sendport);
+            IPEndPoint endPoint = new IPEndPoint(remoteIPAddress, remoteport);
+            try
+            {
+                // Преобразуем данные в массив байтов
+                byte[] bytes = Encoding.UTF8.GetBytes(datagram);
+
+                // Отправляем данные
+                sender.Send(bytes, bytes.Length, endPoint);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                // Закрыть соединение
+                sender.Close();
+            }
+        }
+            
     }
 
 }
