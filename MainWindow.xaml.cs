@@ -17,8 +17,7 @@ namespace EthernetStepperWPF
         private static int remotePort;
         private static int localPort;
         private static int sendPort;
-        public bool isalive = false;
-        Thread tReceive = null;
+        public bool isalive = false;        
         UdpClient receivingUdpClient = null;
         public MainWindow()
         {
@@ -27,6 +26,7 @@ namespace EthernetStepperWPF
             logoutButton.IsEnabled = false;
             sendButton.IsEnabled = false;
             commandTextBox.IsReadOnly = true;
+            
         }
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
@@ -41,9 +41,7 @@ namespace EthernetStepperWPF
             isalive = true;
 
             try
-            {
-                tReceive = new Thread(new ThreadStart(Receiver));
-                tReceive.Start();
+            {                
                 loginButton.IsEnabled = false;
                 logoutButton.IsEnabled = true;
                 sendButton.IsEnabled = true;
@@ -115,15 +113,20 @@ namespace EthernetStepperWPF
     public class ReceiverUDP
     {
         private UdpClient receivingUdpClient;
-        public int localport;
-        int message;
+        int localport;
+        string message = null;
 
         public int Localport
         {
             get { return localport; }
             set { localport = value; }
         }
-        public 
+
+        public string Message
+        {
+            get { return message; }
+
+        }
 
         void StartReceive()
         {
@@ -145,9 +148,9 @@ namespace EthernetStepperWPF
 
                     // Преобразуем и отображаем данные
                     string returnData = Encoding.UTF8.GetString(receiveBytes);
-                    string dataget = returnData.ToString();                 
+                    string dataget = returnData.ToString();             
                     
-                    receivedMessageTextBox.Text = dataget;
+                    message = dataget;
                     
 
                 }
@@ -158,6 +161,11 @@ namespace EthernetStepperWPF
             }
 
         }
+    }
+
+    public class Sender
+    {
+
     }
 
 }
