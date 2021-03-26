@@ -12,8 +12,10 @@ namespace EthernetStepperWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        ReceiverUDP receiverUDP = new ReceiverUDP();
-        Sender senderUDP = new Sender();        
+        
+        Sender senderUDP = new Sender();
+        public delegate void Method();
+        private static Method close;
 
         public MainWindow()
         {
@@ -21,13 +23,14 @@ namespace EthernetStepperWPF
             loginButton.IsEnabled = true;
             logoutButton.IsEnabled = false;
             sendButton.IsEnabled = false;
-            commandTextBox.IsReadOnly = true;          
-            
+            commandTextBox.IsReadOnly = true;
+            close = new Method(Close);
+
         }
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
-            receiverUDP.Localport = Int16.Parse(localportTextBox.Text);
+            
             senderUDP.Remoteport = Int16.Parse(remoteportTextBox.Text);
             senderUDP.Sendport = Int16.Parse(sendportbox.Text);
             senderUDP.IP = IPAddress.Parse(remoteadressTextBox.Text);
@@ -62,69 +65,26 @@ namespace EthernetStepperWPF
 
         private void logoutButton_Click(object sender, RoutedEventArgs e)
         {
-            receiverUDP.Stopreceive();                    
+                   
             
         }
-        
-    }
 
-    public class ReceiverUDP
-    {
-        private UdpClient receivingUdpClient;
-        int localport;
-        string message = null;
-
-        public int Localport
+        private void button_Click(object sender, RoutedEventArgs e)
         {
-            get { return localport; }
-            set { localport = value; }
-        }
-
-        public string Message
-        {
-            get { return message; }
-
-        }
-
-        public void StartReceive()
-        {
+            Window1 window1 = new Window1(this);
+            window1.Owner = this;
+            window1.Show();
+            Hide();
             
-            // Создаем UdpClient для чтения входящих данных
-            receivingUdpClient = new UdpClient(localport);
-
-            IPEndPoint RemoteIpEndPoint = null;
-
-            try
-            {
-
-
-                while (true)
-                {
-                    // Ожидание дейтаграммы
-                    byte[] receiveBytes = receivingUdpClient.Receive(
-                       ref RemoteIpEndPoint);
-
-                    // Преобразуем и отображаем данные
-                    string returnData = Encoding.UTF8.GetString(receiveBytes);
-                    string dataget = returnData.ToString();             
-                    
-                    message = dataget;
-                    
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
         }
-
-        public void Stopreceive()
+        public static void CloseForm()
         {
-            receivingUdpClient.Close();
+            close.Invoke();
         }
+
     }
+
+    
 
     public class Sender
     {
