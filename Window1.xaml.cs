@@ -80,7 +80,7 @@ namespace EthernetStepperWPF
                         string returnData = Encoding.UTF8.GetString(receiveBytes);
                         string dataget = returnData.ToString();
 
-                        message = dataget;
+                        
 
 
                     }
@@ -146,26 +146,26 @@ namespace EthernetStepperWPF
 
         private void leftButton_Click(object sender, RoutedEventArgs e)
         {
-            Task Sending = Task.Run(() =>
-            senderUDP.Send("left"));
+
+            senderUDP.Send("left");
         }
 
         private void rightButton_Click(object sender, RoutedEventArgs e)
         {
-            Task Sending = Task.Run(() =>
-            senderUDP.Send("Right"));
+            
+            senderUDP.Send("Right");
         }
 
         private void speedButton_Click(object sender, RoutedEventArgs e)
         {
-            Task Sending = Task.Run(() =>
-            senderUDP.Send("s" + speedBox.Text));
+            
+            senderUDP.Send("s" + speedBox.Text);
         }
 
         private void distanceButton_Click(object sender, RoutedEventArgs e)
         {
-            Task Sending = Task.Run(() =>
-            senderUDP.Send("d" + distanceBox.Text));
+            
+            senderUDP.Send("d" + distanceBox.Text);
         }
     }
 }
