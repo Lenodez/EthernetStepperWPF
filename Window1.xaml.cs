@@ -40,6 +40,8 @@ namespace EthernetStepperWPF
             main.Show();
             Hide();
         }
+
+
         public class ReceiverUDP
         {
             private UdpClient receivingUdpClient;
@@ -80,7 +82,7 @@ namespace EthernetStepperWPF
                         string returnData = Encoding.UTF8.GetString(receiveBytes);
                         string dataget = returnData.ToString();
 
-                        
+                        message = dataget;
 
 
                     }
