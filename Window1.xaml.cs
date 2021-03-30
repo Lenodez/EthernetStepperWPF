@@ -25,12 +25,26 @@ namespace EthernetStepperWPF
             senderUDP.IP = IPAddress.Parse(Main.remoteadressTextBox.Text);
             Task Receiving = Task.Run(() =>
             receiverUDP.StartReceive());
+            Task task = Task.Run(() =>
+            Message());
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
             MainWindow.CloseForm();
+        }
+
+        private void Message()
+        {
+            while (receiverUDP.isAlive)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    receivedBox.Text = receiverUDP.Message;
+                });
+            }
+            
         }
 
         private void back_Click(object sender, RoutedEventArgs e)
@@ -47,6 +61,7 @@ namespace EthernetStepperWPF
             private UdpClient receivingUdpClient;
             int localport;
             string message = null;
+            bool isalive = false;
 
             public int Localport
             {
@@ -59,6 +74,11 @@ namespace EthernetStepperWPF
                 get { return message; }
 
             }
+            public bool isAlive
+            {
+                get { return isalive; }
+                set { isalive = value; }
+            }
 
             public void StartReceive()
             {
@@ -67,6 +87,7 @@ namespace EthernetStepperWPF
                 receivingUdpClient = new UdpClient(localport);
 
                 IPEndPoint RemoteIpEndPoint = null;
+                isalive = true;
 
                 try
                 {
@@ -96,6 +117,7 @@ namespace EthernetStepperWPF
 
             public void Stopreceive()
             {
+                isalive = false;
                 receivingUdpClient.Close();
             }
         }
