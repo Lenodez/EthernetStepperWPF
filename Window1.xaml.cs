@@ -87,13 +87,13 @@ namespace EthernetStepperWPF
                 receivingUdpClient = new UdpClient(localport);
 
                 IPEndPoint RemoteIpEndPoint = null;
-                isalive = true;
+                isAlive = true;
 
                 try
                 {
 
 
-                    while (receivingUdpClient.EnableBroadcast)
+                    while (isAlive)
                     {
                         // Ожидание дейтаграммы
                         byte[] receiveBytes = receivingUdpClient.Receive(
