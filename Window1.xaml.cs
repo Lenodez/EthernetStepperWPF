@@ -2,8 +2,9 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Windows;
 using System.Threading.Tasks;
+using System.Windows;
+using EthernetLib;
 
 namespace EthernetStepperWPF
 {
@@ -44,7 +45,7 @@ namespace EthernetStepperWPF
                     receivedBox.Text = receiverUDP.Message;
                 });
             }
-            
+
         }
 
         private void back_Click(object sender, RoutedEventArgs e)
@@ -98,7 +99,7 @@ namespace EthernetStepperWPF
                         // Ожидание дейтаграммы
                         byte[] receiveBytes = receivingUdpClient.Receive(
                            ref RemoteIpEndPoint);
-                        
+
                         // Преобразуем и отображаем данные
                         string returnData = Encoding.UTF8.GetString(receiveBytes);
                         string dataget = returnData.ToString();
@@ -176,19 +177,19 @@ namespace EthernetStepperWPF
 
         private void rightButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             senderUDP.Send("Right");
         }
 
         private void speedButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             senderUDP.Send("s" + speedBox.Text);
         }
 
         private void distanceButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             senderUDP.Send("d" + distanceBox.Text);
         }
     }

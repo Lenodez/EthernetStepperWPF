@@ -2,8 +2,8 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Windows;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace EthernetStepperWPF
 {
@@ -12,7 +12,7 @@ namespace EthernetStepperWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
         Sender senderUDP = new Sender();
         public delegate void Method();
         private static Method close;
@@ -30,18 +30,18 @@ namespace EthernetStepperWPF
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             senderUDP.Remoteport = Int16.Parse(remoteportTextBox.Text);
             senderUDP.Sendport = Int16.Parse(sendportbox.Text);
             senderUDP.IP = IPAddress.Parse(remoteadressTextBox.Text);
             localportTextBox.IsReadOnly = true;
             remoteportTextBox.IsReadOnly = true;
             remoteadressTextBox.IsReadOnly = true;
-            
-            
+
+
 
             try
-            {                
+            {
                 loginButton.IsEnabled = false;
                 logoutButton.IsEnabled = true;
                 sendButton.IsEnabled = true;
@@ -54,19 +54,19 @@ namespace EthernetStepperWPF
             }
 
         }
-        
-            
+
+
 
         private void sendButton_Click(object sender, RoutedEventArgs e)
         {
             Task Sending = Task.Run(() =>
-            senderUDP.Send(commandTextBox.Text));            
-        }        
+            senderUDP.Send(commandTextBox.Text));
+        }
 
         private void logoutButton_Click(object sender, RoutedEventArgs e)
         {
-                   
-            
+
+
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -75,7 +75,7 @@ namespace EthernetStepperWPF
             window1.Owner = this;
             window1.Show();
             Hide();
-            
+
         }
         public static void CloseForm()
         {
@@ -84,7 +84,7 @@ namespace EthernetStepperWPF
 
     }
 
-    
+
 
     public class Sender
     {
@@ -130,7 +130,7 @@ namespace EthernetStepperWPF
                 sender.Close();
             }
         }
-            
+
     }
 
 }
