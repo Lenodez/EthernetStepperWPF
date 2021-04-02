@@ -14,4 +14,10 @@
     <ProjectReference Include="..\EthernetLib\EthernetLib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="EthernetLib">
+      <HintPath>..\EthernetLib\obj\Debug\net5.0\EthernetLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
