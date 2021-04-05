@@ -5,15 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EthernetStepperWPF"
         mc:Ignorable="d"
-        Title="Window1" Height="480" Width="400" Closing="Window_Closing">
+        Title="Window1" Height="499" Width="400" Closing="Window_Closing">
     <Grid>
-        <Button x:Name="speedButton" Content="Установить" Margin="240,40,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="30" Click="speedButton_Click"/>
-        <Button x:Name="distanceButton" Content="Установить" Margin="240,90,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="30" Click="distanceButton_Click"/>
-        <TextBox x:Name="speedBox" Margin="40,40,0,0" Text="" TextWrapping="Wrap" Width="200" VerticalAlignment="Top" HorizontalAlignment="Left" Height="30"/>
-        <TextBox x:Name="distanceBox" Margin="40,90,0,0" Text="" TextWrapping="Wrap" Width="200" VerticalAlignment="Top" HorizontalAlignment="Left" Height="30"/>
+        <Button x:Name="speedButton" Content="Установить" Margin="319,38,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="30" Click="speedButton_Click"/>
+        <Button x:Name="distanceButton" Content="Установить" Margin="319,88,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="30" Click="distanceButton_Click"/>
+        <TextBox x:Name="speedBox" Margin="119,38,0,0" Text="" TextWrapping="Wrap" Width="200" VerticalAlignment="Top" HorizontalAlignment="Left" Height="30"/>
+        <TextBox x:Name="distanceBox" Margin="119,88,0,0" Text="" TextWrapping="Wrap" Width="200" VerticalAlignment="Top" HorizontalAlignment="Left" Height="30"/>
         <TextBox x:Name="receivedBox" HorizontalAlignment="Left" Margin="220,400,0,0" Text="Полученное сообщение" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="30"/>
         <Button x:Name="leftButton" Content="Left" HorizontalAlignment="Left" Margin="40,200,0,0" Width="100" Height="80" VerticalAlignment="Top" Click="leftButton_Click"/>
         <Button x:Name="rightButton" Content="Right" HorizontalAlignment="Left" Margin="260,200,0,0" Width="100" Height="80" VerticalAlignment="Top" Click="rightButton_Click"/>
         <Button x:Name="back" Content="К выбору порта" HorizontalAlignment="Left" Margin="40,400,0,0" VerticalAlignment="Top" Click="back_Click" Width="150" Height="30"/>
+        <Label x:Name="label" Content="Скорость" HorizontalAlignment="Left" Margin="28,40,0,0" VerticalAlignment="Top" Width="65"/>
+        <Label x:Name="label_Copy" Content="Дистанция" HorizontalAlignment="Left" Margin="28,88,0,0" VerticalAlignment="Top" Width="70" Height="30"/>
+
     </Grid>
 </Window>
