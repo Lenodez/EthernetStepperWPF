@@ -1,10 +1,8 @@
-﻿using System;
+﻿using EthernetLib;
+using System;
 using System.Net;
-using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using EthernetLib;
 
 
 namespace EthernetStepperWPF
@@ -16,7 +14,7 @@ namespace EthernetStepperWPF
 
     {
         ReceiverUDP receiverUDP = new ReceiverUDP();
-        Sender senderUDP = new Sender();
+        SenderEthernet senderUDP = new SenderEthernet();
         public Window1(MainWindow Main)
         {
             InitializeComponent();
@@ -58,7 +56,7 @@ namespace EthernetStepperWPF
         }
 
 
-        
+
 
         private void leftButton_Click(object sender, RoutedEventArgs e)
         {

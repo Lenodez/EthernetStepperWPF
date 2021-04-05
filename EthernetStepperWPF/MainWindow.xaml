@@ -16,9 +16,6 @@
         <TextBox x:Name="remoteportTextBox" HorizontalAlignment="Left" Margin="126,85,0,0" Text="&#xA;" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.503,1.007" Height="24" Grid.ColumnSpan="2" TabIndex="3"/>
         <TextBox x:Name="remoteadressTextBox" HorizontalAlignment="Left" Margin="126,124,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="23" Grid.ColumnSpan="2" TabIndex="4"/>
         <Button x:Name="loginButton" Content="Задать &#xA;параметры" HorizontalAlignment="Left" Margin="59,166,0,0" VerticalAlignment="Top" Height="43" Width="88" Click="loginButton_Click" TabIndex="5"/>
-        <Button x:Name="sendButton" Content="=&gt;" HorizontalAlignment="Left" Margin="276,287,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.488,0.541" Height="30" Width="39" Click="sendButton_Click" IsTabStop="False"/>
-        <TextBox x:Name="commandTextBox" HorizontalAlignment="Left" Margin="30,321,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208" Height="30" IsTabStop="False"/>
-        <TextBox x:Name="receivedMessageTextBox" HorizontalAlignment="Left" Margin="28,287,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="247" Height="31" IsTabStop="False"/>
         <Button x:Name="logoutButton" Content="Закрыть &#xA;соединение" HorizontalAlignment="Left" Margin="184,167,0,0" VerticalAlignment="Top" Height="42" Width="88" Click="logoutButton_Click" Cursor="" TabIndex="7"/>
         <TextBox x:Name="sendportbox" HorizontalAlignment="Left" Margin="126,45,0,284" Text="&#xA;" TextWrapping="Wrap" Width="120" Grid.ColumnSpan="2" TabIndex="2"/>
         <Label x:Name="label_Copy2" Content="Порт для отправки" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="115" Margin="1,37,0,0"/>

@@ -10,7 +10,7 @@ namespace EthernetLib
         private UdpClient receivingUdpClient;
         int localport;
         string message = null;
-        bool isalive = false;
+        bool isalive = true;
 
         public int Localport
         {
