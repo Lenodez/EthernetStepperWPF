@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 
 
 namespace EthernetStepperWPF
@@ -19,6 +18,7 @@ namespace EthernetStepperWPF
             InitializeComponent();
             loginButton.IsEnabled = true;
             logoutButton.IsEnabled = false;
+            button.IsEnabled = false;
 
             close = new Method(Close);
 
@@ -26,26 +26,13 @@ namespace EthernetStepperWPF
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
-
-
+            button.IsEnabled = true;
             localportTextBox.IsReadOnly = true;
             remoteportTextBox.IsReadOnly = true;
             remoteadressTextBox.IsReadOnly = true;
-
-
-
-            try
-            {
-                loginButton.IsEnabled = false;
-                logoutButton.IsEnabled = true;
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
+            sendportbox.IsReadOnly = true;
+            loginButton.IsEnabled = false;
+            logoutButton.IsEnabled = true;
         }
 
 
@@ -54,7 +41,13 @@ namespace EthernetStepperWPF
 
         private void logoutButton_Click(object sender, RoutedEventArgs e)
         {
-
+            button.IsEnabled = false;
+            localportTextBox.IsReadOnly = false;
+            remoteportTextBox.IsReadOnly = false;
+            remoteadressTextBox.IsReadOnly = false;
+            sendportbox.IsReadOnly = false;
+            loginButton.IsEnabled = true;
+            logoutButton.IsEnabled = false;
 
         }
 

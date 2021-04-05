@@ -52,7 +52,6 @@ namespace EthernetStepperWPF
         private void back_Click(object sender, RoutedEventArgs e)
         {
             MainWindow main = this.Owner as MainWindow;
-            
             receiverUDP.Stopreceive();
             main.Show();
             Hide();
