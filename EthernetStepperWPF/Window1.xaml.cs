@@ -23,10 +23,12 @@ namespace EthernetStepperWPF
             senderUDP.Remoteport = Int16.Parse(Main.remoteportTextBox.Text);
             senderUDP.Sendport = Int16.Parse(Main.sendportbox.Text);
             senderUDP.IP = IPAddress.Parse(Main.remoteadressTextBox.Text);
-            Task Receiving = Task.Run(() =>
+            Task Receiving = new Task(() =>
             receiverUDP.StartReceive());
-            Task task = Task.Run(() =>
+            Receiving.Start();
+            Task task = new Task(() =>
             Message());
+            task.Start();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -50,6 +52,7 @@ namespace EthernetStepperWPF
         private void back_Click(object sender, RoutedEventArgs e)
         {
             MainWindow main = this.Owner as MainWindow;
+            
             receiverUDP.Stopreceive();
             main.Show();
             Hide();

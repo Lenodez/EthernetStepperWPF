@@ -40,22 +40,27 @@ namespace EthernetLib
 
 
 
-
-            while (isAlive)
+            try
             {
-                // Ожидание дейтаграммы
-                byte[] receiveBytes = receivingUdpClient.Receive(
-                   ref RemoteIpEndPoint);
+                while (isAlive)
+                {
+                    // Ожидание дейтаграммы
+                    byte[] receiveBytes = receivingUdpClient.Receive(
+                       ref RemoteIpEndPoint);
 
-                // Преобразуем и отображаем данные
-                string returnData = Encoding.UTF8.GetString(receiveBytes);
-                string dataget = returnData.ToString();
+                    // Преобразуем и отображаем данные
+                    string returnData = Encoding.UTF8.GetString(receiveBytes);
+                    string dataget = returnData.ToString();
 
-                message = dataget;
+                    message = dataget;
 
 
+                }
             }
-
+            catch (System.Exception ex)
+            {
+                
+            }
 
 
         }
