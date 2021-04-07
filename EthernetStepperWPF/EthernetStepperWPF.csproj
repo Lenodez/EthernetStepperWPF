@@ -10,4 +10,14 @@
     <PackageReference Include="NuGet.Protocol" Version="5.9.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EthernetLib\EthernetLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="EthernetLib">
+      <HintPath>..\EthernetLib\obj\Debug\net5.0\EthernetLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
