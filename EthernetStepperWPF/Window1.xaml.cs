@@ -41,10 +41,13 @@ namespace EthernetStepperWPF
         {
             while (receiverUDP.isAlive)
             {
-                this.Dispatcher.Invoke(() =>
+                if (receivedBox.Text != receiverUDP.Message)
                 {
-                    receivedBox.Text = receiverUDP.Message;
-                });
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        receivedBox.Text = receiverUDP.Message;
+                    });
+                }
             }
 
         }
@@ -77,7 +80,10 @@ namespace EthernetStepperWPF
             SpeedWindow speedWindow = new SpeedWindow();
             if(speedWindow.ShowDialog()==true)
             {
-                senderUDP.Send("s" + speedWindow.Speed);
+                if (speedWindow.Speed!= "Текущее Значение")
+                {
+                    senderUDP.Send("s" + speedWindow.Speed);
+                }
             }
             
         }
@@ -87,7 +93,10 @@ namespace EthernetStepperWPF
             DistanceWindow distanceWindow = new DistanceWindow();
             if (distanceWindow.ShowDialog() == true)
             {
-                senderUDP.Send("s" + distanceWindow.Distance);
+                if (distanceWindow.Distance != "Текущее Значение")
+                {
+                    senderUDP.Send("s" + distanceWindow.Distance);
+                }
             }
         }
     }
