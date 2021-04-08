@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EthernetStepperWPF"
         mc:Ignorable="d"
-        Title="Дистанция" Height="121" Width="365">
+        Title="Дистанция" Height="159" Width="365">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />

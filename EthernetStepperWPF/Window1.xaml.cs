@@ -74,14 +74,21 @@ namespace EthernetStepperWPF
 
         private void speedButton_Click(object sender, RoutedEventArgs e)
         {
-
-            senderUDP.Send("s" + speedBox.Text);
+            SpeedWindow speedWindow = new SpeedWindow();
+            if(speedWindow.ShowDialog()==true)
+            {
+                senderUDP.Send("s" + speedWindow.Speed);
+            }
+            
         }
 
         private void distanceButton_Click(object sender, RoutedEventArgs e)
         {
-
-            senderUDP.Send("d" + distanceBox.Text);
+            DistanceWindow distanceWindow = new DistanceWindow();
+            if (distanceWindow.ShowDialog() == true)
+            {
+                senderUDP.Send("s" + distanceWindow.Distance);
+            }
         }
     }
 }

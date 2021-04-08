@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EthernetStepperWPF"
         mc:Ignorable="d"
-        Title="Скорость" Height="123" Width="354">
+        Title="Скорость" Height="139" Width="354">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
