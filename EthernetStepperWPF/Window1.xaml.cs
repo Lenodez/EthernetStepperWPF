@@ -1,6 +1,7 @@
 ﻿using EthernetLib;
 using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -41,13 +42,12 @@ namespace EthernetStepperWPF
         {
             while (receiverUDP.isAlive)
             {
-                if (receivedBox.Text != receiverUDP.Message)
-                {
+                
                     this.Dispatcher.Invoke(() =>
                     {
                         receivedBox.Text = receiverUDP.Message;
                     });
-                }
+                Thread.Sleep(20);
             }
 
         }
