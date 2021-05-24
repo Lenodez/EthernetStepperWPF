@@ -80,8 +80,14 @@ namespace EthernetStepperWPF
 
         private void distanceButton_Click(object sender, RoutedEventArgs e)
         {
-
-            senderUDP.Send("d" + distanceBox.Text);
+            DistanceWindow distanceWindow = new DistanceWindow();
+            if (distanceWindow.ShowDialog() == true)
+            {
+                if (distanceWindow.Distance != "Текущее Значение")
+                {
+                    senderUDP.Send("s" + distanceWindow.Distance);
+                }
+            }
         }
     }
 }
